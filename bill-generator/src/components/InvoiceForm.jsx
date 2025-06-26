@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { API_ENDPOINTS, FALLBACK_API_ENDPOINTS } from '../config/api';
 
 const emptyItem = { description: '', quantity: 1, price: 0 };
 
@@ -41,9 +42,16 @@ export default function InvoiceForm({ onGenerate }) {
     };
 
     try {
-      // Save to backend
-      const response = await axios.post('http://localhost:5000/api/bills', billData);
-      console.log('Bill saved:', response.data);
+      // Try production server first, fallback to localhost if needed
+      let response;
+      try {
+        response = await axios.post(API_ENDPOINTS.BILLS, billData);
+        console.log('Bill saved to production:', response.data);
+      } catch (prodError) {
+        console.log('Production server unavailable, trying localhost...');
+        response = await axios.post(FALLBACK_API_ENDPOINTS.BILLS, billData);
+        console.log('Bill saved to localhost:', response.data);
+      }
       
       // Update UI
       onGenerate(billData);
@@ -56,7 +64,7 @@ export default function InvoiceForm({ onGenerate }) {
       setDisclaimer('Thank you for your business!');
     } catch (err) {
       console.error('Error saving bill:', err);
-      setError('Failed to save bill. Please try again.');
+      setError('Failed to save bill. Please ensure your backend server is running.');
     } finally {
       setLoading(false);
     }
