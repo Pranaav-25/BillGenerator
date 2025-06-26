@@ -8,13 +8,14 @@ Your Bill Generator frontend is ready for deployment to Render! Here's how to do
 - ✅ Backend already deployed: `https://billgenerator-ht14.onrender.com`
 - ✅ Frontend code is production-ready
 - ✅ API configuration is set up correctly
+- ✅ Dependencies are properly configured (including terser)
 
 ### **Step 1: Prepare Your Repository**
 
 1. **Push your code to GitHub:**
    ```bash
    git add .
-   git commit -m "Ready for frontend deployment"
+   git commit -m "Ready for frontend deployment - fixed terser and FontAwesome"
    git push origin main
    ```
 
@@ -31,9 +32,6 @@ Your Bill Generator frontend is ready for deployment to Render! Here's how to do
    - **Publish Directory:** `bill-generator/dist`
    - **Environment:** `Static Site`
 
-   **Environment Variables (Optional):**
-   - `NODE_ENV=production`
-
 5. **Click "Create Static Site"**
 
 ### **Step 3: Verify Deployment**
@@ -41,6 +39,7 @@ Your Bill Generator frontend is ready for deployment to Render! Here's how to do
 1. **Wait for build to complete** (usually 2-3 minutes)
 2. **Test the deployed site**
 3. **Check that bills are being saved to your backend**
+4. **Verify FontAwesome icons are loading**
 
 ### **Expected URLs:**
 - **Frontend:** `https://your-app-name.onrender.com`
@@ -50,21 +49,29 @@ Your Bill Generator frontend is ready for deployment to Render! Here's how to do
 
 **If the build fails:**
 1. Check the build logs in Render
-2. Ensure all dependencies are in `package.json`
+2. Ensure all dependencies are in `package.json` (including terser)
 3. Verify the build command path
 
 **If API calls fail:**
 1. Check browser console for CORS errors
 2. Verify the backend URL is correct
 3. Ensure backend is running and accessible
+4. Check console logs for environment detection
+
+**If FontAwesome doesn't load:**
+1. Check browser console for CDN errors
+2. The app now uses a more reliable CDN (cdnjs.cloudflare.com)
 
 ### **Production Configuration**
 
 Your app is configured to:
-- ✅ Use production backend URL automatically
+- ✅ Use production backend URL automatically (`https://billgenerator-ht14.onrender.com`)
 - ✅ Fall back to localhost if production is down
 - ✅ Handle errors gracefully
 - ✅ Work with both local and production environments
+- ✅ **No environment variables needed** - API URL is hardcoded
+- ✅ **Fixed FontAwesome CDN** - Uses reliable cdnjs.cloudflare.com
+- ✅ **Added terser dependency** - Fixes build errors
 
 ### **Post-Deployment Checklist**
 
@@ -73,6 +80,7 @@ Your app is configured to:
 - [ ] PDF generation works
 - [ ] Responsive design works on mobile
 - [ ] API calls go to production backend
+- [ ] FontAwesome icons display correctly
 
 ### **Custom Domain (Optional)**
 
